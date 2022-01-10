@@ -1,5 +1,4 @@
 import numpy
-import timeit
 
 accelDueGrav = 9.80665
 
@@ -27,8 +26,15 @@ def time_of_flight(angle, velocity, vertical):
     a = numpy.sin(a)
     return (velocity * a + numpy.sqrt((velocity * a)**2 + 2 * accelDueGrav * vertical)) / accelDueGrav 
 
- 
+def distance_for_time(angle, velocity, time):
+    """Return the horizontal distance at given flight time
+    \nAngle degrees. Velocity m/s^2. Time seconds."""
+    a = numpy.deg2rad(angle)
+    a = numpy.cos(a)
+    return velocity*a*time
 
-# print(timeit.timeit('time_of_flight(1.0119579943588308, 800, 10)', setup="from __main__ import time_of_flight"))
+
+print(distance_for_time(17.1355116, 100, 5.232920112591154))
+
 
 
