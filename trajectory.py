@@ -19,9 +19,16 @@ def get_elevation(velocity, distance, vertical, highAngle=False):
         radians = numpy.tanh( (velocity**2 - numpy.sqrt( velocity**4 - accelDueGrav*(accelDueGrav*distance**2 + 2*vertical*velocity**2) )) / (accelDueGrav*distance) )
     angle = numpy.rad2deg(radians)
     return angle
-   
-# TODO
-# def time_of_flight(angle, velocity, distance, vertical):
-#     pass
 
-# print(timeit.timeit('get_elevation(100, 500, 20)', setup="from __main__ import get_elevation"))
+def time_of_flight(angle, velocity, vertical):
+    """Return time of flight in seconds for projectile
+    \nAngle degrees. Velocity m/s^2. Vertical metres"""
+    a = numpy.deg2rad(angle)
+    a = numpy.sin(a)
+    return (velocity * a + numpy.sqrt((velocity * a)**2 + 2 * accelDueGrav * vertical)) / accelDueGrav 
+
+ 
+
+# print(timeit.timeit('time_of_flight(1.0119579943588308, 800, 10)', setup="from __main__ import time_of_flight"))
+
+
