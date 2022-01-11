@@ -4,7 +4,7 @@ accelDueGrav = 9.80665
 
 def get_initial_height(angle, initialVelocity, horizontalDistance):
     """Return initial height needed to reach horizontal distance for given angle and initial velocity.
-    \nAngle in degrees. Initial velocity m/s^2. Horizontal metres."""
+    \nAngle in degrees. Initial velocity m/s. Horizontal metres."""
     angleRadians = numpy.deg2rad(angle)
     initialHeight = horizontalDistance * numpy.tan(angleRadians) - (accelDueGrav * horizontalDistance ** 2) / (2 * initialVelocity ** 2 * numpy.cos(angleRadians) ** 2)
     initialHeight = 0 - initialHeight
@@ -12,7 +12,7 @@ def get_initial_height(angle, initialVelocity, horizontalDistance):
 
 def get_elevation(initialVelocity, horizontalDistance, initialHeight, highAngle=False):
     """Return the angle needed to reach point for given initial velocity
-    \nInitial velocity m/s^2. Horizontal metres. initialHeight metres."""
+    \nInitial velocity m/s. Horizontal metres. initialHeight metres."""
     initialHeight = 0 - initialHeight
     if highAngle:
         radians = numpy.tanh( (initialVelocity**2 + numpy.sqrt( initialVelocity**4 - accelDueGrav*(accelDueGrav*horizontalDistance**2 + 2*initialHeight*initialVelocity**2) )) / (accelDueGrav*horizontalDistance) )
@@ -23,7 +23,7 @@ def get_elevation(initialVelocity, horizontalDistance, initialHeight, highAngle=
 
 def get_both_angles(initialVelocity, horizontalDistance, initialHeight):
     """Return tuple of both angles needed to reach point for given initial velocity
-    \nInitial velocity m/s^2. Horizontal metres. initialHeight metres."""
+    \nInitial velocity m/s. Horizontal metres. initialHeight metres."""
     initialHeight = 0 - initialHeight
     angle1 = numpy.rad2deg( numpy.tanh( (initialVelocity**2 + numpy.sqrt( initialVelocity**4 - accelDueGrav*(accelDueGrav*horizontalDistance**2 + 2*initialHeight*initialVelocity**2) )) / (accelDueGrav*horizontalDistance) ))
     angle2 = numpy.rad2deg( numpy.tanh( (initialVelocity**2 - numpy.sqrt( initialVelocity**4 - accelDueGrav*(accelDueGrav*horizontalDistance**2 + 2*initialHeight*initialVelocity**2) )) / (accelDueGrav*horizontalDistance) ))
@@ -31,7 +31,7 @@ def get_both_angles(initialVelocity, horizontalDistance, initialHeight):
 
 def time_of_flight(angle, initialVelocity, initialHeight=None):
     """Return time of flight in seconds for projectile. If initial height is not given then maximum flight time is returned for target that is the same height as initial height.
-    \nAngle degrees. Initial velocity m/s^2. initial height metres"""
+    \nAngle degrees. Initial velocity m/s. initial height metres"""
     angle = numpy.deg2rad(angle)
     angle = numpy.sin(angle)
     if initialHeight:
@@ -42,7 +42,7 @@ def time_of_flight(angle, initialVelocity, initialHeight=None):
 
 def get_distance(angle, initialVelocity, time=None):
     """Return the horizontal distance for initial velocity and angle. If no time argument is given then maximum distance is returned for target that is the same height as initial height.
-    \nAngle degrees. Initial velocity m/s^2. Time seconds."""
+    \nAngle degrees. Initial velocity m/s. Time seconds."""
     if time:
         angle = numpy.deg2rad(angle)
         angle = numpy.cos(angle)
@@ -63,13 +63,3 @@ def get_initial_velocity(angle, horizontalDistance, time=None):
         velocity = numpy.sqrt(horizontalDistance*accelDueGrav/numpy.sin(angle*2))
     return velocity 
 
-
-print(get_initial_height(10, 100, 500))
-
-print(get_elevation(100, 500, get_initial_height(10, 100, 500)))
-
-print(time_of_flight(get_elevation(100, 500, get_initial_height(10, 100, 500)),100, get_initial_height(10, 100, 500)))
-
-print(get_distance(10, 100, 5.08))
-
-print(get_initial_velocity(10,500,5.08))
