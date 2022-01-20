@@ -10,7 +10,7 @@ def get_initial_height(angle, initialVelocity, horizontalDistance):
     initialHeight = 0 - initialHeight
     return initialHeight
 
-def get_elevation(initialVelocity, horizontalDistance, initialHeight, highAngle=False):
+def get_launch_angle(initialVelocity, horizontalDistance, initialHeight, highAngle=False):
     """Return the angle needed to reach point for given initial velocity
     \nInitial velocity m/s. Horizontal metres. initialHeight metres."""
     initialHeight = 0 - initialHeight
